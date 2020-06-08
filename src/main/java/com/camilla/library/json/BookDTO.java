@@ -12,6 +12,15 @@ public class BookDTO implements Serializable {
 
 	private int quantity;
 
+	public BookDTO() {
+	}
+
+	public BookDTO(Book book, int quantity) {
+		super();
+		this.book = book;
+		this.quantity = quantity;
+	}
+
 	/**
 	 * @return the book
 	 */

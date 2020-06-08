@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 /**
@@ -19,10 +20,11 @@ public class Rental extends EntityModel {
 
 	private static final long serialVersionUID = 6157718994642163332L;
 
-	@Column(nullable = false)
+	@JoinColumn(name = "bookUnit_id")
+	@ManyToOne
 	private BookUnit bookUnit;
 
-	@Column(nullable = false)
+	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
 
@@ -37,6 +39,15 @@ public class Rental extends EntityModel {
 
 	public Rental() {
 		super();
+		setLateDays(calculateLateDays());
+		setLatePenaltyAmount(calculateLatePenaltyAmount());
+	}
+
+	public Rental(BookUnit bookUnit, Client client, Date rentalDate) {
+		super();
+		this.bookUnit = bookUnit;
+		this.client = client;
+		this.rentalDate = rentalDate;
 		setLateDays(calculateLateDays());
 		setLatePenaltyAmount(calculateLatePenaltyAmount());
 	}
@@ -115,7 +126,7 @@ public class Rental extends EntityModel {
 	 * @return the lateDays
 	 */
 	public long calculateLateDays() {
-		if(getRentalDate() == null ) {
+		if (getRentalDate() == null) {
 			return 0;
 		}
 		LocalDate limitDate = getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(3);

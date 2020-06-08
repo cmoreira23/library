@@ -2,12 +2,14 @@ package com.camilla.library.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author camilla
  *
  */
-@Entity()
+@Entity
+@Table(name = "author")
 public class Author extends EntityModel {
 
 	private static final long serialVersionUID = 6578859287682334256L;
@@ -16,6 +18,15 @@ public class Author extends EntityModel {
 
 	@Column(nullable = false)
 	private String lastName;
+
+	public Author() {
+	}
+
+	public Author(String firstName, String lastName) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
 	/**
 	 * @return the firstName

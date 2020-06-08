@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author camilla
  *
  */
-@Entity()
+@Entity
+@Table(name = "book")
 public class Book extends EntityModel {
 
 	private static final long serialVersionUID = 7353809521066624022L;
@@ -21,7 +24,7 @@ public class Book extends EntityModel {
 	private String subTitle;
 
 	@JoinColumn(name = "author_id")
-	@Column(nullable = false)
+	@ManyToOne
 	private Author author;
 
 	private LocalDate publicationDate;
@@ -39,6 +42,15 @@ public class Book extends EntityModel {
 	private String genre;
 
 	private String isbn;
+
+	public Book() {
+	}
+
+	public Book(String title, Author author) {
+		super();
+		this.title = title;
+		this.author = author;
+	}
 
 	/**
 	 * @return the title

@@ -12,6 +12,7 @@ import com.camilla.library.enumerate.BookStatusEnum;
 import com.camilla.library.json.BookDTO;
 import com.camilla.library.model.Book;
 import com.camilla.library.model.BookUnit;
+import com.camilla.library.repository.AuthorRepository;
 import com.camilla.library.repository.BookRepository;
 import com.camilla.library.repository.BookUnitRepository;
 
@@ -23,6 +24,9 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepository;
+
+	@Autowired
+	private AuthorRepository authorRepository;
 
 	public List<BookUnit> getAllBookUnits() {
 		return this.bookUnitRepository.findAll();
@@ -40,6 +44,9 @@ public class BookService {
 
 	private Book saveBook(Book book) throws RestClientException {
 		try {
+			if (book.getAuthor().getId() == null) {
+				this.authorRepository.saveAndFlush(book.getAuthor());
+			}
 			this.bookRepository.save(book);
 			return book;
 		} catch (Exception e) {

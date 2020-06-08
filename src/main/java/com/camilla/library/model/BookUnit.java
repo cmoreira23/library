@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.camilla.library.enumerate.BookStatusEnum;
 
@@ -22,8 +23,17 @@ public class BookUnit extends EntityModel {
 	private BookStatusEnum status;
 
 	@JoinColumn(name = "book_id")
-	@Column(nullable = false)
+	@ManyToOne
 	private Book book;
+
+	public BookUnit(BookStatusEnum status, Book book) {
+		super();
+		this.status = status;
+		this.book = book;
+	}
+
+	public BookUnit() {
+	}
 
 	/**
 	 * @return the status

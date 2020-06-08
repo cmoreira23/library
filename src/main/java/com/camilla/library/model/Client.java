@@ -14,8 +14,17 @@ public class Client extends EntityModel {
 
 	@Column(nullable = false)
 	private String name;
-	
+
 	private String phone;
+
+	public Client() {
+	}
+
+	public Client(String name, String phone) {
+		super();
+		this.name = name;
+		this.phone = phone;
+	}
 
 	/**
 	 * @return the name
